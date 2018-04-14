@@ -24,19 +24,29 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
     @IBAction func BotonResponder(_ sender: UIButton) {
         obtenerRespuesta()
     }
     
-    // 5 respuestas
     func obtenerRespuesta(){
-        var numeroRespuesta: Int = Int(arc4random_uniform(5))
-        for i in 0..<respuestas.count {
+        var cantidadRespuestas: Int = respuestas.count
+        var numeroRespuesta: Int = Int(arc4random_uniform(UInt32(cantidadRespuestas)))
+        for i in 0..<cantidadRespuestas {
             if numeroRespuesta == i{
                 ImagenRespuesta.image = UIImage(named: respuestas[i])
             }
         }
     }
 
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            self.obtenerRespuesta()
+        }
+    }
+    
 }
 
